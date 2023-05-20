@@ -13,7 +13,6 @@ public class GameManager : MonoBehaviour
     public int Volumen_active = 0;
     void Start()
     {
-
         Volumen_active = PlayerPrefs.GetInt(VolumenPrefsName, Volumen_active);
         if (Volumen_active == 1)
         {
@@ -44,18 +43,14 @@ public class GameManager : MonoBehaviour
 
     public void SetVolumenOn()
     {
-
         VolumenOn.SetActive(false);
         VolumenOff.SetActive(true);
         Volumen_active = 0;
         PlayerPrefs.SetInt(VolumenPrefsName, Volumen_active);
-
-
     }
 
     public void SetVolumenOff()
     {
-
         VolumenOn.SetActive(true);
         VolumenOff.SetActive(false);
         Volumen_active = 1;

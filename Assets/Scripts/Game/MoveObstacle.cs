@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class MoveObstacle : MonoBehaviour
 {
-    // Start is called before the first frame update
-   
     public float ObjectSpeed = 10;
-    //public static MoveObstacle instance_obs;
 
     //Variables shares with the airplane manager script
     private ÁirplaneMovement gameManage;
@@ -19,10 +16,8 @@ public class MoveObstacle : MonoBehaviour
     public int Amount_Cloud_avoid = 0; 
     public int Amount_Heart_avoid = 0;
 
-
     private void Awake()
     {
-        //instance_obs = this;
     }
 
     void Start()
@@ -32,10 +27,9 @@ public class MoveObstacle : MonoBehaviour
         gameManage = ÁirplaneMovement.instance;
     }
 
-    // Update is called once per frame
     void LateUpdate()
     {
-        //If the came is over STOP THE MOVEMENT OF THE CLOUDS 
+        //If the game is over STOP THE MOVEMENT OF THE OBSTACLES 
         if (gameManage.isGameActive)
         {
             transform.Translate(Vector3.back * Time.deltaTime * ObjectSpeed);

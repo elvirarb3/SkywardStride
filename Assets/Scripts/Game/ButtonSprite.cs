@@ -8,13 +8,10 @@ public class ButtonSprite : MonoBehaviour
     // Start is called before the first frame update
     public Sprite b1;
     public Button buttonChange;
-
-    void Start()
+        void Start()
     {
         buttonChange.image.sprite = b1;
     }
-
-
     // Update is called once per frame
     void Update()
     {

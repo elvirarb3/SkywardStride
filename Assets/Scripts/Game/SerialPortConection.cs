@@ -10,12 +10,10 @@ public class SerialPortConection : MonoBehaviour
 {
     private UsersData dataManage;
     private GameManager gameManager;
-    SerialPort serialPort = new SerialPort("COM5", 9600); //Inicializamos el puerto serie
-    private float orient_x = 0;
-
-    //La pongo en publico para testear 
+    SerialPort serialPort = new SerialPort("COM5", 9600); //Inicializamos serial port 
+    
     public float orient_y = 0;
-
+    private float orient_x = 0;
     private float orient_z = 0;
 
     public TextMeshProUGUI Show_Max_Value;
@@ -36,6 +34,8 @@ public class SerialPortConection : MonoBehaviour
     {
         gameManage = ÁirplaneMovement.instance;
         Scene_Active = SceneManager.GetActiveScene().name;
+        //This script work diferent depending on the scene that it being running
+        //For the main menu the serial port values are used to store the max and min value of the TFLEX ranges
         if(Scene_Active == "MainMenu"){
 
             dataManage = FindObjectOfType<UsersData>();
@@ -49,17 +49,12 @@ public class SerialPortConection : MonoBehaviour
             user_aux = dataManage.User_Active;
             InMainMenu = true;
         }
-        else
+        else //But if you are in the game the values will always being sending and the dataManage object doesn't exist 
         {
             InMainMenu = false;
         }
-
-        serialPort.Open(); //Abrimos una nueva conexión de puerto serie
-        serialPort.ReadTimeout = 100; //Establecemos el tiempo de espera cuando una operación de lectura no finaliza
-
-
-
-
+        serialPort.Open(); //Open a new serial port conexion
+        serialPort.ReadTimeout = 100;
     }
 
     // Update is called once per frame
@@ -77,26 +72,20 @@ public class SerialPortConection : MonoBehaviour
 
                 user_aux = dataManage.User_Active;
             }
-
         }
-        
 
         if (serialPort.IsOpen)
         {
-            try //utilizamos el bloque try/catch para detectar una posible excepción.
+            try
             {
-                string value = serialPort.ReadLine(); //leemos una linea del puerto serie y la almacenamos en un string
+                string value = serialPort.ReadLine(); //Save the serial port line in a string 
            
-                string[] vec6 = value.Split(','); //Separamos el String leido valiendonos 
-                                                  //de las comas y almacenamos los valores en un array.
+                string[] vec6 = value.Split(','); 
                 orient_x = float.Parse( vec6[0]);
                 orient_y =float.Parse( vec6[1]);
                 orient_z = float.Parse(vec6[2]);
 
-                //print("orientacion x" + orient_x);
-                //print("orientacion y" + orient_y);
-                //print("orientacion z" + orient_z);
-                gameManage.orient_y = orient_y;
+                gameManage.orient_y = orient_y; //Only the y value is currently being used
             }
 
             catch
@@ -111,7 +100,6 @@ public class SerialPortConection : MonoBehaviour
         Max_actual = orient_y;
         Show_Max_Value.text = Max_actual.ToString();
         PlayerPrefs.SetFloat("Max_" +dataManage.User_Active, Max_actual);
-        
     }
     public void SetMinimunValue()
     {

@@ -13,7 +13,7 @@ public class MenuControler : MonoBehaviour
     public Slider Slider2;
     public Slider Slider3;
 
-    //Input value 
+    //Input value for the SETTINGS menu
     public TMP_InputField Inputtext1;
     public TMP_InputField Inputtext2;
     public TMP_InputField Inputtext3;
@@ -52,7 +52,6 @@ public class MenuControler : MonoBehaviour
     private float aux_speed = 0;
     private int aux_time = 120;
 
-
     //Values maximun and minimun for the airplane angle speed 
     private float MaxSpeed = 10;
     private float MinSpeed = 30;
@@ -63,14 +62,12 @@ public class MenuControler : MonoBehaviour
     private string save_SpeedPrefsName = "Speed_value";
     private string TimePrefsName = "GameTime";
 
-
-
     public void Start()
     {
         //Accedemos 
         AirplaneVariable = ÁirplaneMovement.instance;
-        //Ads a listener to the main slider and invokes a method when the value changes.
-        
+
+        //Ads a listener to the main slider and inputtext and invokes a method when the value changes (SETTINGS MENU)
         Slider1.onValueChanged.AddListener(delegate { ValueChangeCheck1(); });
         Slider2.onValueChanged.AddListener(delegate { ValueChangeCheck2(); });
         Slider3.onValueChanged.AddListener(delegate { ValueChangeCheck3(); });
@@ -80,15 +77,13 @@ public class MenuControler : MonoBehaviour
         Inputtext3.onValueChanged.AddListener(delegate { InputValueCheck3(); });
         Inputtext4.onValueChanged.AddListener(delegate { InputValueCheck4(); });
 
-
-        //Para guardar los valores de los sliders entre partidas
-
-        //Cargamos los valores anteriores de los settings
+        //Restore the previous settings values
         aux_rcloud = PlayerPrefs.GetFloat(save_RandomCloudPrefsName, 0);
         aux_rheart = PlayerPrefs.GetFloat(save_RandomHeartPrefsName, 0);
         aux_speed = PlayerPrefs.GetFloat(save_SpeedPrefsName, 0);
         aux_time = PlayerPrefs.GetInt(TimePrefsName, aux_time);
 
+        //Show the current settings values
         Inputtext1.text = aux_rcloud.ToString();
         Inputtext2.text = aux_speed.ToString();
         Inputtext3.text = aux_rheart.ToString();
@@ -103,14 +98,10 @@ public class MenuControler : MonoBehaviour
         {
             SetVolumenOn();
         }
-
-
     }
-
     void Update()
     {
     }
-
     public void SetCorrectInputValue( Slider slider , float valor )
     {
         if (valor > 100)
@@ -131,57 +122,50 @@ public class MenuControler : MonoBehaviour
         float value1=  float.Parse(Inputtext1.text);
         PlayerPrefs.SetFloat(save_RandomCloudPrefsName,value1);
         SetCorrectInputValue(Slider1, value1);
-
     }
     public void InputValueCheck2() {
 
         float value2 = float.Parse(Inputtext2.text);
         PlayerPrefs.SetFloat(save_SpeedPrefsName, value2);
         SetCorrectInputValue(Slider2, value2);
-
     }
     public void InputValueCheck3() {
 
         float value3 = float.Parse(Inputtext3.text);
         PlayerPrefs.SetFloat(save_RandomHeartPrefsName, value3);
         SetCorrectInputValue(Slider3, value3);       
-
     }
 
     public void InputValueCheck4()
     {
-
         float value4 = float.Parse(Inputtext4.text);
         PlayerPrefs.SetInt(TimePrefsName, (int)value4);
-
     }
 
     // Funtion when the Random Cloud Time slider is modified.
     public void ValueChangeCheck1()
     {
-        Debug.Log(Slider1.value);
         float aux_invert = 1 - Slider1.value;
         if (aux_invert == 0)
         {
             aux_invert = 0.01f;
         }
         Inputtext1.text = (Math.Round(Slider1.value * 100)).ToString();
-        //Guardamos la velocidad para cambiarla 
-        //El valor del slider devuelve un numero del 0 al 1
+        
+        //The slider values goes from 0 to 1
         float ValueObtained1 = (float)Math.Round(aux_invert * 100) * 0.01f;
         RandomCloud = 0.4f+ (ValueObtained1 *0.8f*10)/5;
         PlayerPrefs.SetFloat(RandomCloudPrefsName, RandomCloud);
 
     }
     // Funcion when the Airplane Angle Speed slider is modified.
-    //La velocidad no deberia ser nunca 0 o no se va a mover
     public void ValueChangeCheck2()
     {
         Debug.Log(Slider2.value);
         Inputtext2.text = (Math.Round(Slider2.value * 100)).ToString();
         //The slider return a value from 0-1, so the real speed in calculate between the maximun an minimun speed 
         float ValueObtained2 = (float)Math.Round(Slider2.value * 100) * 0.01f;
-        Speed = 10 +(ValueObtained2 * 10) * MinSpeed/MaxSpeed;
+        Speed = 10 +(ValueObtained2 * 10) * MinSpeed/MaxSpeed;  //The speed should never be 0 (the airplane doesn't move verticaly)
         PlayerPrefs.SetFloat(SpeedPrefsName, Speed);
     }
     // Funcion when the Random Heart % slider is modified.
@@ -193,25 +177,22 @@ public class MenuControler : MonoBehaviour
         RandomHeart = (float)(Math.Round(Slider3.value * 50));
         PlayerPrefs.SetFloat(RandomHeartPrefsName, RandomHeart);
     }
-    //Funtions to connect the diferents MENU CANVAS
 
+    //Funtions to connect the diferents MENU CANVAS setting then on or off
     public void SaveChanges()
-    {
-        //On/Off the canvas  
+    { 
         Dificulty.SetActive(false);
         MainMenu.SetActive(true);
     }
     public void Settings()
     {
-        //On/Off the canvas  
         MainMenu.SetActive(false);
         Dificulty.SetActive(true);
         
     }
 
     public void StartButton()
-    {
-        //On/Off the canvas   
+    {  
         MainMenu.SetActive(false);
         SelectUser.SetActive(true);
 
@@ -219,15 +200,13 @@ public class MenuControler : MonoBehaviour
 
     public void EditUserData()
     {
-        //On/Off the canvas
         CalibrateRanges.SetActive(false);
         SelectUser.SetActive(false);
         SetUserData.SetActive(true);
     }
 
     public void BackUserData()
-    {
-        //On/Off the canvas   
+    {  
         SetUserData.SetActive(false);
         Mode.SetActive(false);
         SelectUser.SetActive(true);
@@ -236,15 +215,13 @@ public class MenuControler : MonoBehaviour
 
 
     public void SetUser()
-    {
-        //On/Off the canvas   
+    {  
         SelectUser.SetActive(false);
         Mode.SetActive(true);
 
     }
     public void BackMainMenu()
-    {
-        //On/Off the canvas   
+    { 
         Mode.SetActive(false);
         SelectUser.SetActive(false);
         MainMenu.SetActive(true);
@@ -263,7 +240,7 @@ public class MenuControler : MonoBehaviour
         PlayerPrefs.SetFloat(CloudSpeedPrefsName, CloudSpeed);
         Volumen_active = volumen;
         PlayerPrefs.SetInt(VolumenPrefsName, Volumen_active);
-        STARTGAME();
+        STARTGAME(); //The game start when the difficulty if chosen
     }
         
     public void SetDificultMedium()
@@ -273,7 +250,7 @@ public class MenuControler : MonoBehaviour
         PlayerPrefs.SetFloat(CloudSpeedPrefsName, CloudSpeed);
         Volumen_active = volumen;
         PlayerPrefs.SetInt(VolumenPrefsName, Volumen_active);
-        STARTGAME();
+        STARTGAME(); //The game start when the difficulty if chosen
     }
     public void SetDificultHard()
     {
@@ -282,40 +259,31 @@ public class MenuControler : MonoBehaviour
         PlayerPrefs.SetFloat(CloudSpeedPrefsName, CloudSpeed);
         Volumen_active = volumen;
         PlayerPrefs.SetInt(VolumenPrefsName, Volumen_active);
-        STARTGAME();
-    }
-
-    //Once everything is configured THE START BOTTON LOAD THE GAME SCENE 
-    public void STARTGAME()
-    {
-        SceneManager.LoadScene("Game");
+        STARTGAME(); //The game start when the difficulty if chosen
     }
 
     public void Calibrate()
     {
-
         SetUserData.SetActive(false);
         CalibrateRanges.SetActive(true);
-
     }
 
     public void SetVolumenOn()
     {
-
         VolumenOn.SetActive(false);
         VolumenOff.SetActive(true);
         volumen = 0;
-
-
     }
 
     public void SetVolumenOff()
     {
-
         VolumenOn.SetActive(true);
         VolumenOff.SetActive(false);
         volumen = 1;
-
+    }
+    public void STARTGAME()
+    {
+        SceneManager.LoadScene("Game"); // LOAD THE GAME SCENE 
     }
 
 }

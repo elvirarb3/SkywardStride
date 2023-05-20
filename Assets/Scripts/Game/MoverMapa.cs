@@ -10,13 +10,12 @@ public class MoverMapa : MonoBehaviour
     void Start()
     {
         gameManage = ÁirplaneMovement.instance;
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        //If the game is active, simulate the X movement of the airplane
+        //If the game is active, simulate the X movement of the airplane, moving the background
         if (gameManage.isGameActive){
             transform.Rotate(new Vector3(0, -1, 0), Time.deltaTime * tSpeed);
         }

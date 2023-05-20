@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//This script simulate the start movement
 public class MoveWaveObstacle : MonoBehaviour
 {
     // Start is called before the first frame update

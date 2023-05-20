@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Count_Avoid_Object : MonoBehaviour
 {
-
-
     //Variables shares with the airplane manager script
     private ÁirplaneMovement gameManage;
 
@@ -14,33 +12,22 @@ public class Count_Avoid_Object : MonoBehaviour
     public int Amount_Heart_lost = 0;
     public int Amount_Start_lost = 0;
     public int Amount_Coin_lost = 0;
-
-
-
-
     void Start()
     {
-
         gameManage = ÁirplaneMovement.instance;
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
-        //If the came is over STOP THE MOVEMENT OF THE CLOUDS 
-        if (gameManage.isGameActive)
-        {
-
-        }
 
     }
     private void OnTriggerEnter(Collider other)
-    {
-
+    {   
+        //Cound how many object pass the airplane with a invisible plane
         if (other.gameObject.name == "Heart")
         {
             Amount_Heart_lost = Amount_Heart_lost + 1;
-
         }
         else if(other.gameObject.name == "Cloud-A(Clone)")
         {

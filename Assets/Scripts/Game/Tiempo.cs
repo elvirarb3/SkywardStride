@@ -12,12 +12,12 @@ public class Tiempo : MonoBehaviour
     private ÁirplaneMovement gameManage;
     private GameManager gameManager;
 
-    //Para hacer al jugador inmortal durante 7 segundos 
+    //The player will be inmortal during 7 seconds 
     private float countdownDuration;
     public float Temporizador = 7f;
     public bool Avion_activo = false;
 
-    //Para setear el tiempo 
+    //Set the game time with the value of the Menu 
     private string TimePrefsName = "GameTime";
     void Start()
     {
@@ -28,10 +28,8 @@ public class Tiempo : MonoBehaviour
         //Catch GameManager script to share variables 
         gameManager = FindObjectOfType<GameManager>();
         countdownDuration = Temporizador;
-        gameManager.tiempo = PlayerPrefs.GetInt(TimePrefsName, 120); //Esta en segundos
-
+        gameManager.tiempo = PlayerPrefs.GetInt(TimePrefsName, 120); //In seconds
     }
-    // Update is called once per frame
     void Update()
     {
         //Keep counting if the game is been playing 
@@ -39,7 +37,7 @@ public class Tiempo : MonoBehaviour
         {
  
             formatearTiempo();
-            //Se usan dos variables para resetear el temporizador si ha cogido una estrella mientras ya es inmortal funcionando como flanco de subida 
+            //Two variables are used to restart the 7 second timer if you catch a second start while you are inmortal
             if (gameManage.Inmortal_Airplane == true)
             {   
                 gameManage.Inmortal_Airplane = false;
@@ -58,43 +56,34 @@ public class Tiempo : MonoBehaviour
                 }
                 else
                 {
-                    RainBow();
-                    
+                    RainBow(); //While you are inmortal the time appear with different colours 
                 }
             }
-
         }
     }
     //Change the time from second --> h:min:sec
     public void formatearTiempo()
     {
-
         //If the game is running update the value 
         if (gameManage.isGameActive)
         {
             gameManager.tiempo -= Time.deltaTime;
-            //print("Tiempo de juego:" + gameManager.tiempo);
-
             if (gameManager.tiempo < 0f)
             {
                 gameManage.isGameActive = false;
                 //gameManage.GameOver();
                 gameManage.GameComplete();
-
             }
             else
             {
                 if (gameManager.tiempo < 11f)
                 {
-
                     textoTiempo.color = new Color(0.8113208f, 0.1415984f, 0.1415984f, 1f);
                 }
                 string minutos = Mathf.Floor(gameManager.tiempo / 60).ToString("00");
                 string segundos = Mathf.Floor(gameManager.tiempo % 60).ToString("00");
 
                 textoTiempo.text = minutos + ":" + segundos;
-
-
             }
         }
     }
