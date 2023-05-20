@@ -26,18 +26,8 @@
    =======
    2015/MAR/03  - First release (KTOWN)
 */
-
 /* Set the delay between fresh samples */
 uint16_t BNO055_SAMPLERATE_DELAY_MS = 100;
-
-// Check I2C device address and correct line below (by default address is 0x29 or 0x28)
-//                                   id, address
-// El puerto 0x28 es la BN055_I2C_ADDR1 --> COMUNICACION I2C
-/*
-const int sensorPin4 = A4;
-const int sensorPin5 = A5;  
-int sensorValue;  
-*/
 Adafruit_BNO055 bno = Adafruit_BNO055(55, 0x28, &Wire);
 
 void setup(void)
