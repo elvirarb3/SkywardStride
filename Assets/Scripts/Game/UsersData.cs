@@ -72,13 +72,13 @@ public class UsersData : MonoBehaviour
         InputtextLaterality.onValueChanged.AddListener(delegate { ValueChange_Late(); });
         Inputtextpathology.onValueChanged.AddListener(delegate { ValueChange_Patho(); });
 
-
         usuario = PlayerPrefs.GetInt(User, 0);
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Load and updated the values for the user data
         Nombre_actual = PlayerPrefs.GetString("Name_" + User_Active, "Maria");
         Apellido_actual = PlayerPrefs.GetString("Lastname_" + User_Active, "Rodriguez");
         Edad_actual = PlayerPrefs.GetString("Age_" + User_Active, "20");
@@ -93,7 +93,6 @@ public class UsersData : MonoBehaviour
             InputtextLaterality.text = Late_actual;
             Inputtextpathology.text = Patho_actual;
         }
-
     }
 
     public void InputValueCheck1()
@@ -116,8 +115,6 @@ public class UsersData : MonoBehaviour
 
         }
         Cambia = false;
-
-
     }
     public void InputValueCheck2()
     {
@@ -139,8 +136,6 @@ public class UsersData : MonoBehaviour
 
         }
         Cambia = false;
-
-
     }
 
     public void InputValueCheck3()
@@ -186,7 +181,6 @@ public class UsersData : MonoBehaviour
 
         }
         Cambia = false;
-
     }
     public void InputValueCheck5()
     {
@@ -210,16 +204,12 @@ public class UsersData : MonoBehaviour
         }
         Cambia = false;
     }
-    
     public void SetUser1()
     {
         User_Active = 1;
         PlayerPrefs.SetInt(User, 1);
         Cambia = false;
-
-
     }
-
     public void SetUser2()
     {
         User_Active = 2;
@@ -227,40 +217,34 @@ public class UsersData : MonoBehaviour
         Cambia = false;
 
     }
-
     public void SetUser3()
     {
         User_Active = 3;
         PlayerPrefs.SetInt(User, 3);
         Cambia = false;
-
     }
 
-    public void ValueChange_Name() {
-
+    public void ValueChange_Name()
+    {
         Cambia = true;
     }
     public void ValueChange_LastName()
     {
-
         Cambia = true;
     }
 
     public void ValueChange_Age()
     {
-
         Cambia = true;
     }
 
     public void ValueChange_Late()
     {
-
         Cambia = true;
     }
 
     public void ValueChange_Patho()
     {
-
         Cambia = true;
     }
 
